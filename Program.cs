@@ -1,2 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using System;
+
+Console.OutputEncoding = System.Text.Encoding.UTF8;
+MenuPrincipal.Mostrar();
