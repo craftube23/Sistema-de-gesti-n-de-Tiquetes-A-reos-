@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Sistema-de-gesti-n-de-Tiquetes-Areos-")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a0545e37f0449b947ce83388683873a801f2711f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e79f98d3527438b3eb7bb95c1cb115a406c60c77")]
 [assembly: System.Reflection.AssemblyProductAttribute("Sistema-de-gesti-n-de-Tiquetes-Areos-")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Sistema-de-gesti-n-de-Tiquetes-Areos-")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
