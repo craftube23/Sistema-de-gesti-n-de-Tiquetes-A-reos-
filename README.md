@@ -51,6 +51,7 @@ Dentro de tu contenedor de desarrollo, ejecuta:
 Bash
 
 dotnet ef database update
+```
 📈 Estado del Proyecto: 8 Tablas Creadas
 Actualmente, el sistema cuenta con 8 tablas base que permiten la gestión completa de:
 
