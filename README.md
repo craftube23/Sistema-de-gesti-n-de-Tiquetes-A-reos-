@@ -49,6 +49,7 @@ JSON
 Dentro de tu contenedor de desarrollo, ejecuta:
 
 Bash
+
 dotnet ef database update
 📈 Estado del Proyecto: 8 Tablas Creadas
 Actualmente, el sistema cuenta con 8 tablas base que permiten la gestión completa de:
@@ -64,9 +65,16 @@ Clientes 👥
 Reservas 📅
 
 ...y más relaciones internas.
+---
 
-👤 Autor
-Andrés Felipe Navas Alvear
-Front-end Developer & Independent Musician
+## 👤 Autor
+**Andrés Felipe Navas Alvear** *Front-end Developer & Independent Musician* 📍 Bucaramanga, Colombia
 
-Este proyecto se encuentra en desarrollo activo. 🏗️
+---
+
+## 🛠️ Estado del Proyecto
+Este proyecto se encuentra **en desarrollo activo** 🏗️.  
+Actualmente enfocado en la lógica de servicios y la construcción de la interfaz de usuario en consola.
+
+---
+
