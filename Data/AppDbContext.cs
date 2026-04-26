@@ -12,6 +12,8 @@ public class AppDbContext : DbContext
     public DbSet<Reserva> Reservas { get; set; }
     public DbSet<Tiquete> Tiquetes { get; set; }
     public DbSet<Pago> Pagos { get; set; }
+    public DbSet<ClaseVuelo> ClasesVuelo { get; set; }
+    public DbSet<Asiento> Asientos { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -53,5 +55,30 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Pago>()
             .Property(p => p.Monto)
             .HasPrecision(10, 2);
+        // Asiento → Vuelo
+        modelBuilder.Entity<Asiento>()
+            .HasOne(a => a.Vuelo)
+            .WithMany(v => v.Asientos)
+            .HasForeignKey(a => a.VueloId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Asiento → ClaseVuelo
+        modelBuilder.Entity<Asiento>()
+            .HasOne(a => a.ClaseVuelo)
+            .WithMany(c => c.Asientos)
+            .HasForeignKey(a => a.ClaseVueloId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Cambiar PrecioPorAsiento por PrecioBase si no existe aún
+        modelBuilder.Entity<Vuelo>()
+            .Property(v => v.PrecioPorAsiento)
+            .HasPrecision(10, 2);
+
+        // Seed de las 3 clases de vuelo
+        modelBuilder.Entity<ClaseVuelo>().HasData(
+            new ClaseVuelo { Id = 1, Nombre = "Economica",     Multiplicador = 1.0m },
+            new ClaseVuelo { Id = 2, Nombre = "Ejecutiva",     Multiplicador = 1.8m },
+            new ClaseVuelo { Id = 3, Nombre = "Primera Clase", Multiplicador = 3.0m }
+        );
     }
 }

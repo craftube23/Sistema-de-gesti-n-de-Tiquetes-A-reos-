@@ -11,6 +11,11 @@ public class Vuelo
     public string Estado { get; set; } = "PROGRAMADO"; // PROGRAMADO, CANCELADO, COMPLETADO
     public decimal PrecioPorAsiento { get; set; }
 
+    //Asientos Disponibles
+    public int AsientosEconomica { get; set; }
+    public int AsientosEjecutiva { get; set; }
+    public int AsientosPrimeraClase { get; set; }
+
     // Llaves foráneas
     public int AerolineaId { get; set; }
     public int AeropuertoOrigenId { get; set; }
@@ -21,4 +26,5 @@ public class Vuelo
     public Aeropuerto AeropuertoOrigen { get; set; } = null!;
     public Aeropuerto AeropuertoDestino { get; set; } = null!;
     public ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
+    public ICollection<Asiento> Asientos { get; set; } = new List<Asiento>();
 }

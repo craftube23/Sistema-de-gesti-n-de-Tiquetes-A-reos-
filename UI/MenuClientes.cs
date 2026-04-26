@@ -45,27 +45,113 @@ public static class MenuClientes
 
         Console.Write("Nombres: ");
         var nombres = Console.ReadLine() ?? "";
+        if (string.IsNullOrWhiteSpace(nombres))
+        {
+            Console.WriteLine("❌ El nombre no puede estar vacío.");
+            Console.ReadKey();
+            return;
+        }
+
         Console.Write("Apellidos: ");
         var apellidos = Console.ReadLine() ?? "";
-        Console.Write("Tipo documento (CC / PASAPORTE / CE): ");
-        var tipo = Console.ReadLine() ?? "";
+        if (string.IsNullOrWhiteSpace(apellidos))
+        {
+            Console.WriteLine("❌ El apellido no puede estar vacío.");
+            Console.ReadKey();
+            return;
+        }
+
+        // Tipo de documento con opciones claras
+        Console.WriteLine("Tipo de documento:");
+        Console.WriteLine("  [1] Cédula de Ciudadanía (CC)");
+        Console.WriteLine("  [2] Pasaporte");
+        Console.WriteLine("  [3] Cédula de Extranjería (CE)");
+        Console.Write("Opción: ");
+        var tipoDoc = Console.ReadLine() switch
+        {
+            "1" => "CC",
+            "2" => "PASAPORTE",
+            "3" => "CE",
+            _   => ""
+        };
+
+        if (string.IsNullOrEmpty(tipoDoc))
+        {
+            Console.WriteLine("❌ Tipo de documento inválido.");
+            Console.ReadKey();
+            return;
+        }
+
+        // Validar número de documento según tipo
         Console.Write("Número de documento: ");
         var numero = Console.ReadLine() ?? "";
+
+        if (string.IsNullOrWhiteSpace(numero))
+        {
+            Console.WriteLine("❌ El número de documento no puede estar vacío.");
+            Console.ReadKey();
+            return;
+        }
+
+        bool documentoValido = tipoDoc switch
+        {
+            // CC: solo números, entre 6 y 10 dígitos
+            "CC" => numero.All(char.IsDigit) && numero.Length >= 6 && numero.Length <= 10,
+            // Pasaporte: letras y números, entre 5 y 9 caracteres
+            "PASAPORTE" => numero.All(char.IsLetterOrDigit) && numero.Length >= 5 && numero.Length <= 9,
+            // CE: letras y números, entre 6 y 10 caracteres
+            "CE" => numero.All(char.IsLetterOrDigit) && numero.Length >= 6 && numero.Length <= 10,
+            _ => false
+        };
+
+        if (!documentoValido)
+        {
+            Console.WriteLine(tipoDoc switch
+            {
+                "CC"        => "❌ CC inválida. Solo números, entre 6 y 10 dígitos.",
+                "PASAPORTE" => "❌ Pasaporte inválido. Letras y números, entre 5 y 9 caracteres.",
+                "CE"        => "❌ CE inválida. Letras y números, entre 6 y 10 caracteres.",
+                _           => "❌ Documento inválido."
+            });
+            Console.ReadKey();
+            return;
+        }
+
+        // Validar email
         Console.Write("Email: ");
         var email = Console.ReadLine() ?? "";
-        Console.Write("Teléfono: ");
+
+        if (!email.Contains('@') || !email.Contains('.') || 
+            email.IndexOf('@') == 0 || 
+            email.IndexOf('@') == email.Length - 1 ||
+            email.Split('@')[1].Length < 3)
+        {
+            Console.WriteLine("❌ Email inválido. Debe tener formato ejemplo@correo.com");
+            Console.ReadKey();
+            return;
+        }
+
+        // Validar teléfono
+        Console.Write("Teléfono (10 dígitos): ");
         var telefono = Console.ReadLine() ?? "";
+
+        if (!telefono.All(char.IsDigit) || telefono.Length != 10)
+        {
+            Console.WriteLine("❌ Teléfono inválido. Debe tener exactamente 10 dígitos.");
+            Console.ReadKey();
+            return;
+        }
 
         try
         {
             service.Registrar(new Cliente
             {
-                Nombres = nombres,
-                Apellidos = apellidos,
-                TipoDocumento = tipo.ToUpper(),
-                NumeroDocumento = numero,
-                Email = email,
-                Telefono = telefono
+                Nombres         = nombres.Trim(),
+                Apellidos       = apellidos.Trim(),
+                TipoDocumento   = tipoDoc,
+                NumeroDocumento = numero.Trim(),
+                Email           = email.Trim().ToLower(),
+                Telefono        = telefono.Trim()
             });
             Console.WriteLine("\n✅ Cliente registrado correctamente.");
         }

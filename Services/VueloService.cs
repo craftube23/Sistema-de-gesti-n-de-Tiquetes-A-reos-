@@ -45,7 +45,7 @@ public class VueloService
             .Include(v => v.AeropuertoOrigen)
             .Include(v => v.AeropuertoDestino)
             .Where(v => v.AsientosDisponibles > 0 && v.Estado == "PROGRAMADO")
-            .OrderBy(v => v.FechaSalida)
+            .OrderBy(v => v.Id)
             .ToList();
     }
 

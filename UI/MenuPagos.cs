@@ -62,13 +62,40 @@ public static class MenuPagos
         Console.Write("\nID de la reserva: ");
         if (!int.TryParse(Console.ReadLine(), out int id)) return;
 
-        Console.Write("Método de pago (TARJETA / EFECTIVO / PSE): ");
-        var metodo = Console.ReadLine() ?? "";
+        var reserva = reservas.FirstOrDefault(r => r.Id == id);
+        if (reserva == null)
+        {
+            Console.WriteLine("❌ Reserva no encontrada en la lista.");
+            Console.ReadKey();
+            return;
+        }
+
+        // Método de pago con opciones numeradas
+        Console.WriteLine("\nMétodo de pago:");
+        Console.WriteLine("  [1] Tarjeta");
+        Console.WriteLine("  [2] Efectivo");
+        Console.WriteLine("  [3] PSE");
+        Console.Write("Opción: ");
+
+        var metodo = Console.ReadLine() switch
+        {
+            "1" => "TARJETA",
+            "2" => "EFECTIVO",
+            "3" => "PSE",
+            _   => ""
+        };
+
+        if (string.IsNullOrEmpty(metodo))
+        {
+            Console.WriteLine("❌ Método de pago inválido.");
+            Console.ReadKey();
+            return;
+        }
 
         try
         {
             pagoService.Registrar(id, metodo);
-            Console.WriteLine("\n✅ Pago registrado correctamente.");
+            Console.WriteLine($"\n✅ Pago de ${reserva.ValorTotal:N0} registrado con {metodo}.");
         }
         catch (InvalidOperationException ex)
         {
@@ -77,7 +104,6 @@ public static class MenuPagos
 
         Console.ReadKey();
     }
-
     private static void Listar(PagoService service)
     {
         Console.Clear();

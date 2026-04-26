@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/craftube23/proyectos-c#/Sistema-de-gesti-n-de-Tiquetes-Areos-/Sistema-de-gesti-n-de-Tiquetes-Areos-.csproj": {}
+    "/home/craftube23/Escritorio/Sistema-de-gesti-n-de-Tiquetes-A-reos-/Sistema-de-gesti-n-de-Tiquetes-Areos-.csproj": {}
   },
   "projects": {
-    "/home/craftube23/proyectos-c#/Sistema-de-gesti-n-de-Tiquetes-Areos-/Sistema-de-gesti-n-de-Tiquetes-Areos-.csproj": {
+    "/home/craftube23/Escritorio/Sistema-de-gesti-n-de-Tiquetes-A-reos-/Sistema-de-gesti-n-de-Tiquetes-Areos-.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/craftube23/proyectos-c#/Sistema-de-gesti-n-de-Tiquetes-Areos-/Sistema-de-gesti-n-de-Tiquetes-Areos-.csproj",
+        "projectUniqueName": "/home/craftube23/Escritorio/Sistema-de-gesti-n-de-Tiquetes-A-reos-/Sistema-de-gesti-n-de-Tiquetes-Areos-.csproj",
         "projectName": "Sistema-de-gesti-n-de-Tiquetes-Areos-",
-        "projectPath": "/home/craftube23/proyectos-c#/Sistema-de-gesti-n-de-Tiquetes-Areos-/Sistema-de-gesti-n-de-Tiquetes-Areos-.csproj",
+        "projectPath": "/home/craftube23/Escritorio/Sistema-de-gesti-n-de-Tiquetes-A-reos-/Sistema-de-gesti-n-de-Tiquetes-Areos-.csproj",
         "packagesPath": "/home/craftube23/.nuget/packages/",
-        "outputPath": "/home/craftube23/proyectos-c#/Sistema-de-gesti-n-de-Tiquetes-Areos-/obj/",
+        "outputPath": "/home/craftube23/Escritorio/Sistema-de-gesti-n-de-Tiquetes-A-reos-/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/craftube23/.nuget/NuGet/NuGet.Config"
@@ -20,7 +20,6 @@
           "net10.0"
         ],
         "sources": {
-          "/usr/lib64/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -83,12 +82,18 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[10.0.4, 10.0.4]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/10.0.103/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.104/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

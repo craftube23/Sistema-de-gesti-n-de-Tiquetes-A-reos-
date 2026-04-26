@@ -48,37 +48,95 @@ public static class MenuReservas
         Console.Clear();
         Console.WriteLine("--- Crear Reserva ---\n");
 
-        // Seleccionar cliente
         var clientes = clienteService.ObtenerTodos();
-        Console.WriteLine("Clientes:");
-        foreach (var c in clientes)
-            Console.WriteLine($"  [{c.Id}] {c.Nombres} {c.Apellidos} | {c.NumeroDocumento}");
-        Console.Write("ID cliente: ");
-        if (!int.TryParse(Console.ReadLine(), out int clienteId)) return;
+            Console.WriteLine("Clientes:");
+            foreach (var c in clientes)
+                Console.WriteLine($"  [{c.Id}] {c.Nombres} {c.Apellidos} | {c.NumeroDocumento}");
+            Console.Write("ID cliente: ");
+            if (!int.TryParse(Console.ReadLine(), out int clienteId)) return;
 
-        // Seleccionar vuelo
-        var vuelos = vueloService.ObtenerDisponibles();
-        Console.WriteLine("\nVuelos disponibles:");
-        foreach (var v in vuelos)
-            Console.WriteLine($"  [{v.Id}] {v.CodigoVuelo} | " +
-                $"{v.AeropuertoOrigen.CodigoIATA} → {v.AeropuertoDestino.CodigoIATA} | " +
-                $"{v.FechaSalida:yyyy-MM-dd HH:mm} | " +
-                $"Asientos: {v.AsientosDisponibles} | Precio: ${v.PrecioPorAsiento:N0}");
-        Console.Write("ID vuelo: ");
-        if (!int.TryParse(Console.ReadLine(), out int vueloId)) return;
+            var vuelos = vueloService.ObtenerDisponibles();
 
-        Console.Write("Cantidad de asientos: ");
-        if (!int.TryParse(Console.ReadLine(), out int asientos)) return;
+    if (!vuelos.Any())
+    {
+        Console.WriteLine("❌ No hay vuelos disponibles en este momento.");
+        Console.ReadKey();
+        return;
+    }
+
+    Console.WriteLine("\nVuelos disponibles:");
+    foreach (var v in vuelos)
+        Console.WriteLine($"  [{v.Id}] {v.CodigoVuelo} | " +
+            $"{v.AeropuertoOrigen.CodigoIATA} → {v.AeropuertoDestino.CodigoIATA} | " +
+            $"{v.FechaSalida:yyyy-MM-dd HH:mm} | " +
+            $"Asientos libres: {v.AsientosDisponibles} | " +
+            $"Precio base: ${v.PrecioPorAsiento:N0}");
+
+    Console.Write("ID vuelo: ");
+    if (!int.TryParse(Console.ReadLine(), out int vueloId)) return;
+
+    // Validar que el ID ingresado exista en la lista mostrada
+    var vueloSeleccionado = vuelos.FirstOrDefault(v => v.Id == vueloId);
+    if (vueloSeleccionado == null)
+    {
+        Console.WriteLine("❌ El ID ingresado no corresponde a un vuelo disponible.");
+        Console.ReadKey();
+        return;
+    }
+
+        // Mostrar mapa
+        var context = DbContextFactory.Create();
+        var asientoService = new AsientoService(context);
+        var todosAsientos = asientoService.ObtenerPorVuelo(vueloId);
+
+        Console.Clear();
+        Console.WriteLine("Mapa de asientos:\n");
+        MapaAsientos.Mostrar(todosAsientos);
+
+        // Seleccionar clase
+        var clases = asientoService.ObtenerClases();
+        Console.WriteLine("\nClases disponibles:");
+        foreach (var cl in clases)
+            Console.WriteLine($"  [{cl.Id}] {cl.Nombre} — multiplicador x{cl.Multiplicador}");
+        Console.Write("ID clase: ");
+        if (!int.TryParse(Console.ReadLine(), out int claseId)) return;
+
+        // Precio dinámico según clase
+        decimal precioPorAsiento = asientoService.CalcularPrecio(vueloId, claseId);
+        Console.WriteLine($"\n  Precio por asiento en esta clase: ${precioPorAsiento:N0}");
+
+        // Selección manual de asientos
+        var disponibles = asientoService.ObtenerDisponiblesPorClase(vueloId, claseId);
+        if (!disponibles.Any())
+        {
+            Console.WriteLine("❌ No hay asientos disponibles en esa clase.");
+            Console.ReadKey();
+            return;
+        }
+
+        var asientoIds = MapaAsientos.SeleccionarAsientos(disponibles);
+        if (!asientoIds.Any())
+        {
+            Console.WriteLine("❌ No seleccionaste ningún asiento.");
+            Console.ReadKey();
+            return;
+        }
 
         try
         {
+            // Reservar asientos seleccionados
+            asientoService.ReservarAsientos(asientoIds);
+
+            // Crear reserva
             service.Crear(new Reserva
             {
-                ClienteId = clienteId,
-                VueloId = vueloId,
-                CantidadAsientos = asientos
+                ClienteId        = clienteId,
+                VueloId          = vueloId,
+                CantidadAsientos = asientoIds.Count,
+                ValorTotal       = precioPorAsiento * asientoIds.Count
             });
-            Console.WriteLine("\n✅ Reserva creada correctamente.");
+
+            Console.WriteLine($"\n✅ Reserva creada. {asientoIds.Count} asiento(s) reservado(s).");
         }
         catch (InvalidOperationException ex)
         {

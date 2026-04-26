@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wiw/rBmFQHg=",
+  "dgSpecHash": "OazpjVOXMYE=",
   "success": true,
-  "projectFilePath": "/home/craftube23/proyectos-c#/Sistema-de-gesti-n-de-Tiquetes-Areos-/Sistema-de-gesti-n-de-Tiquetes-Areos-.csproj",
+  "projectFilePath": "/home/craftube23/Escritorio/Sistema-de-gesti-n-de-Tiquetes-A-reos-/Sistema-de-gesti-n-de-Tiquetes-Areos-.csproj",
   "expectedPackageFiles": [
     "/home/craftube23/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/home/craftube23/.nuget/packages/microsoft.bcl.asyncinterfaces/7.0.0/microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
@@ -44,7 +44,8 @@
     "/home/craftube23/.nuget/packages/system.composition.convention/7.0.0/system.composition.convention.7.0.0.nupkg.sha512",
     "/home/craftube23/.nuget/packages/system.composition.hosting/7.0.0/system.composition.hosting.7.0.0.nupkg.sha512",
     "/home/craftube23/.nuget/packages/system.composition.runtime/7.0.0/system.composition.runtime.7.0.0.nupkg.sha512",
-    "/home/craftube23/.nuget/packages/system.composition.typedparts/7.0.0/system.composition.typedparts.7.0.0.nupkg.sha512"
+    "/home/craftube23/.nuget/packages/system.composition.typedparts/7.0.0/system.composition.typedparts.7.0.0.nupkg.sha512",
+    "/home/craftube23/.nuget/packages/microsoft.aspnetcore.app.ref/10.0.4/microsoft.aspnetcore.app.ref.10.0.4.nupkg.sha512"
   ],
   "logs": []
 }
