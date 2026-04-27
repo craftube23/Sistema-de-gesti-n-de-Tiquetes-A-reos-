@@ -57,7 +57,7 @@ public static class MenuAeropuertos
             Pais = pais
         });
 
-        Console.WriteLine("\n✅ Aeropuerto registrado .");
+        Console.WriteLine("\n✅ Aeropuerto registrado.");
         Console.ReadKey();
     }
 
